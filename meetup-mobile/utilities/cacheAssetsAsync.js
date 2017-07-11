@@ -14,6 +14,14 @@ function cacheFonts(fonts) {
   return fonts.map(font => Font.loadAsync(font));
 }
 
+export const fontAssets = {
+  fonts: [
+    { 'monserrat-bold': require('../assets/fonts/Montserrat-Bold.ttf') },
+    { 'monserrat-regular': require('../assets/fonts/Montserrat-Regular.ttf') },
+    { 'monserrat-light': require('../assets/fonts/Montserrat-Light.ttf') },
+  ],
+};
+
 export default function cacheAssetsAsync({ images = [], fonts = [] }) {
   return Promise.all([...cacheImages(images), ...cacheFonts(fonts)]);
 }

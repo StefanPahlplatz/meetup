@@ -6,7 +6,7 @@ import Metrics from '../../../constants/Metrics';
 import Colors from '../../../constants/Colors';
 
 class CreateMeetupScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation }) => ({ //eslint-disable-line
     title: 'Create a new Meetup',
     headerTitleStyle: { color: Colors.whiteColor },
     headerStyle: {

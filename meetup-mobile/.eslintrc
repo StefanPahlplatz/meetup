@@ -13,7 +13,9 @@
         ]
       }
     ],
-    "no-underscore-dangle": "warn"
+    "no-underscore-dangle": "warn",
+    "global-require":"warn",
+    "import/prefer-default-export": "off"
   },
   "parser": "babel-eslint"
 }

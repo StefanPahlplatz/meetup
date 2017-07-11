@@ -5,7 +5,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 
 import Root from './src/Root';
 
-import cacheAssetsAsync from './utilities/cacheAssetsAsync';
+import cacheAssetsAsync, { fontAssets } from './utilities/cacheAssetsAsync';
 import Colors from './constants/Colors';
 import store from './src/redux/store';
 
@@ -26,13 +26,7 @@ export default class App extends React.Component {
 
   async loadAssetsAsync() {
     try {
-      await cacheAssetsAsync({
-        fonts: [
-          { 'monserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf') },
-          { 'monserrat-regular': require('./assets/fonts/Montserrat-Regular.ttf') },
-          { 'monserrat-light': require('./assets/fonts/Montserrat-Light.ttf') },
-        ],
-      });
+      await cacheAssetsAsync(fontAssets);
     } catch (e) {
       console.warn('Error loading assets.');
       console.error(e.message);

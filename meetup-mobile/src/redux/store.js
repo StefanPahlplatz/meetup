@@ -8,7 +8,7 @@ const middlewares = [
 ];
 
 if (process.env.NODE_ENV === 'development') {
-  const { logger } = require('redux-logger');
+  const { logger } = require('redux-logger'); //eslint-disable-line
 
   middlewares.push(logger);
 }
