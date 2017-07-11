@@ -1,46 +1,46 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import { fetchMeetups } from './constants/api';
+import { AppLoading } from 'expo';
+import EStyleSheet from 'react-native-extended-stylesheet';
+import Colors from './constants/Colors';
+import cacheAssetsAsync from './utilities/cacheAssetsAsync';
+import Root from './src/Root';
+
+EStyleSheet.build(Colors);
 
 export default class App extends React.Component {
+  constructor() {
+    super();
 
-  static defaultProps = {
-    fetchMeetups
+    this.state = {
+      fontLoaded: false,
+    };
   }
 
-  state = {
-    loading: false,
-    meetups: []
+  componentWillMount() {
+    this.loadAssetsAsync();
   }
 
-  async componentDidMount() {
-    this.setState({ loading: true });
-    const data = await this.props.fetchMeetups();
-    setTimeout(() => this.setState({ loading: false, meetups: data.meetups }), 2000);
+  async loadAssetsAsync() {
+    try {
+      await cacheAssetsAsync({
+        fonts: [
+          { 'monserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf') },
+          { 'monserrat-regular': require('./assets/fonts/Montserrat-Regular.ttf') },
+          { 'monserrat-light': require('./assets/fonts/Montserrat-Light.ttf') },
+        ],
+      });
+    } catch (e) {
+      console.warn('Error loading assets.');
+      console.log(e.message);
+    } finally {
+      this.setState({ fontLoaded: true });
+    }
   }
 
   render() {
-    if (this.state.loading) {
-      return (
-        <View style={styles.container}>
-          <ActivityIndicator size="large" />
-        </View>
-      )
+    if (!this.state.fontLoaded) {
+      return <AppLoading />;
     }
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-      </View>
-    );
+    return <Root />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
