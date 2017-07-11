@@ -36,7 +36,6 @@ class HomeScreen extends Component {
     this.setState({ loading: true });
     const meetups = await this.props.meetupApi.fetchGroupMeetups();
     this.setState({ loading: false, meetups });
-    console.log(meetups);
   }
 
   render() {
