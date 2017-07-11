@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { Button } from 'native-base';
+import { Button, Icon } from 'native-base';
 
 import { LoadingScreen } from '../../commons';
 import { MyMeetupList } from './components';
@@ -12,20 +12,31 @@ import Colors from '../../../constants/Colors';
 import Metrics from '../../../constants/Metrics';
 import styles from './styles/HomeScreen';
 
-@connect(
-  state => ({
-    myMeetups: state.home.myMeetups,
-  }),
-  { fetchMyMeetups },
-)
+@connect(state => ({ myMeetups: state.home.myMeetups }), { fetchMyMeetups })
 class HomeScreen extends Component {
 
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     headerStyle: {
       backgroundColor: Colors.redColor,
       paddingTop: Metrics.statusBarHeight,
       height: Metrics.statusBarHeight + Metrics.toolBarHeight,
     },
+    headerRight: (
+      <View>
+        <Button
+          transparent
+          onPress={() => navigation.navigate('CreateMeetup')}
+        >
+          <Icon
+            name="md-add-circle"
+            style={{
+              fontSize: 30,
+              color: Colors.whiteColor,
+            }}
+          />
+        </Button>
+      </View>
+    ),
     tabBarIcon: ({ tintColor }) => (
       <MaterialIcons
         name="home"
@@ -33,7 +44,7 @@ class HomeScreen extends Component {
         color={tintColor}
       />
     ),
-  };
+  });
 
   componentDidMount() {
     this.props.fetchMyMeetups();
