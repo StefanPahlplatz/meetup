@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+import { Button } from 'native-base';
 
 import { LoadingScreen } from '../../commons';
 import { MyMeetupList } from './components';
 
 import { fetchMyMeetups } from './actions';
 import Colors from '../../../constants/Colors';
+import Metrics from '../../../constants/Metrics';
 import styles from './styles/HomeScreen';
 
 @connect(
@@ -21,6 +23,8 @@ class HomeScreen extends Component {
   static navigationOptions = {
     headerStyle: {
       backgroundColor: Colors.redColor,
+      paddingTop: Metrics.statusBarHeight,
+      height: Metrics.statusBarHeight + Metrics.toolBarHeight,
     },
     tabBarIcon: ({ tintColor }) => (
       <MaterialIcons
@@ -58,6 +62,7 @@ class HomeScreen extends Component {
       <View style={styles.root}>
         <View style={styles.topContainer}>
           <Text>HomeScreen</Text>
+          {/*<Button>test</Button>*/}
         </View>
         <View style={styles.bottomContainer}>
           <MyMeetupList meetups={data} />
