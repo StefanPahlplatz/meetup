@@ -11,11 +11,16 @@ class MeetupApi {
   }
 
   async fetchGroupMeetups() {
-    const { data } = await axios.get(this.path);
-    return data.meetups;
+    try {
+      const { data } = await axios.get(this.path);
+      return data.meetups;
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
   }
 }
 
 export {
-  MeetupApi
+  MeetupApi,
 };

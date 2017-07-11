@@ -1,9 +1,13 @@
 import React from 'react';
 import { AppLoading } from 'expo';
+import { Provider } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import Colors from './constants/Colors';
-import cacheAssetsAsync from './utilities/cacheAssetsAsync';
+
 import Root from './src/Root';
+
+import cacheAssetsAsync from './utilities/cacheAssetsAsync';
+import Colors from './constants/Colors';
+import store from './src/redux/store';
 
 EStyleSheet.build(Colors);
 
@@ -31,7 +35,7 @@ export default class App extends React.Component {
       });
     } catch (e) {
       console.warn('Error loading assets.');
-      console.log(e.message);
+      console.error(e.message);
     } finally {
       this.setState({ fontLoaded: true });
     }
@@ -41,6 +45,10 @@ export default class App extends React.Component {
     if (!this.state.fontLoaded) {
       return <AppLoading />;
     }
-    return <Root />;
+    return (
+      <Provider store={store}>
+        <Root />
+      </Provider>
+    );
   }
 }

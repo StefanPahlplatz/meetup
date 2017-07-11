@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { MeetupApi } from '../../../constants/api';
-import { LoadingScreen } from '../../commons'
+import { connect } from 'react-redux';
+
+import { LoadingScreen } from '../../commons';
 import { MyMeetupList } from './components';
+
+import { fetchMyMeetups } from './actions';
 import Colors from '../../../constants/Colors';
 import styles from './styles/HomeScreen';
 
-const meetupApi = new MeetupApi();
-
+@connect(
+  state => ({
+    myMeetups: state.home.myMeetups,
+  }),
+  { fetchMyMeetups },
+)
 class HomeScreen extends Component {
-  static defaultProps = {
-    meetupApi
-  }
 
   static navigationOptions = {
     headerStyle: {
@@ -20,27 +24,34 @@ class HomeScreen extends Component {
     },
     tabBarIcon: ({ tintColor }) => (
       <MaterialIcons
-        name='home'
+        name="home"
         size={25}
         color={tintColor}
       />
-    )
+    ),
   };
 
-  state = {
-    loading: false,
-    meetups: [],
-  }
-
-  async componentDidMount() {
-    this.setState({ loading: true });
-    const meetups = await this.props.meetupApi.fetchGroupMeetups();
-    this.setState({ loading: false, meetups });
+  componentDidMount() {
+    this.props.fetchMyMeetups();
   }
 
   render() {
-    if (this.state.loading) {
-      return <LoadingScreen />
+    const {
+      myMeetups: {
+        isFetched,
+        data,
+        error,
+      },
+    } = this.props;
+
+    if (!isFetched) {
+      return <LoadingScreen />;
+    } else if (error.on) {
+      return (
+        <View>
+          <Text>{error.message}</Text>
+        </View>
+      );
     }
 
     return (
@@ -49,7 +60,7 @@ class HomeScreen extends Component {
           <Text>HomeScreen</Text>
         </View>
         <View style={styles.bottomContainer}>
-          <MyMeetupList meetups={this.state.meetups} />
+          <MyMeetupList meetups={data} />
         </View>
       </View>
     );

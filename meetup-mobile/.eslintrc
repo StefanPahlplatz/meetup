@@ -14,5 +14,6 @@
       }
     ],
     "no-underscore-dangle": "warn"
-  }
+  },
+  "parser": "babel-eslint"
 }

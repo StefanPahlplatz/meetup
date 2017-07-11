@@ -14,7 +14,7 @@ const MyMeetupsList = ({ meetups }) => (
           <View key={meetup.title} style={styles.meetupCard}>
 
             <View style={styles.meetupCardTopContainer}>
-              <Text style={styles.meetupCard}>
+              <Text style={styles.meetupCardTitle}>
                 {meetup.title}
               </Text>
             </View>

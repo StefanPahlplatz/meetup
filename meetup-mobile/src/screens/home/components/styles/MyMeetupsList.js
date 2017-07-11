@@ -22,7 +22,7 @@ const styles = EStyleSheet.create({
     marginVertical: 8,
     width: 175,
     marginHorizontal: 5,
-    backgroundColor: '$redColor', // give this a font.
+    backgroundColor: '$redColor',
   },
   meetupCardTopContainer: {
     flex: 1,
