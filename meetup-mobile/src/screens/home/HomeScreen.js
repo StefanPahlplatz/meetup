@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'native-base';
@@ -22,20 +22,16 @@ class HomeScreen extends Component {
       height: Metrics.statusBarHeight + Metrics.toolBarHeight,
     },
     headerRight: (
-      <View>
-        <Button
-          transparent
-          onPress={() => navigation.navigate('CreateMeetup')}
-        >
-          <Icon
-            name="md-add-circle"
-            style={{
-              fontSize: 30,
-              color: Colors.whiteColor,
-            }}
-          />
-        </Button>
-      </View>
+      <TouchableOpacity
+        style={styles.iconAdd}
+        onPress={() => navigation.navigate('CreateMeetup')}
+      >
+        <MaterialIcons
+          name="add-circle"
+          size={30}
+          color="#fff"
+        />
+      </TouchableOpacity>
     ),
     tabBarIcon: ({ tintColor }) => (
       <MaterialIcons
@@ -54,8 +50,8 @@ class HomeScreen extends Component {
     const {
       myMeetups: {
         isFetched,
-        data,
-        error,
+      data,
+      error,
       },
     } = this.props;
 
@@ -73,7 +69,6 @@ class HomeScreen extends Component {
       <View style={styles.root}>
         <View style={styles.topContainer}>
           <Text>HomeScreen</Text>
-          {/*<Button>test</Button>*/}
         </View>
         <View style={styles.bottomContainer}>
           <MyMeetupList meetups={data} />

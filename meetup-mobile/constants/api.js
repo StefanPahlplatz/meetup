@@ -19,6 +19,17 @@ class MeetupApi {
       return null;
     }
   }
+
+  async createGroupMeetups(args) {
+    try {
+      const res = await axios.post(`${this.path}/new`, { ...args });
+      console.log(res);
+      return res;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  }
 }
 
 export {
