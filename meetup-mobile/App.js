@@ -28,7 +28,6 @@ export default class App extends React.Component {
     try {
       await cacheAssetsAsync(fontAssets);
     } catch (e) {
-      console.warn('Error loading assets.');
       console.error(e.message);
     } finally {
       this.setState({ fontLoaded: true });

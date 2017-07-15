@@ -94,8 +94,6 @@ class CreateMeetupScreen extends Component {
       description,
       date,
     });
-
-    console.log(res);
   }
 
   render() {
