@@ -5,7 +5,7 @@ const createGroup = async (req, res) => {
   const {
     name,
     description,
-    category,
+    // category,
   } = req.body;
 
   if (!name) {

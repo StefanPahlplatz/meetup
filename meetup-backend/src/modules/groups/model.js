@@ -24,7 +24,7 @@ const GroupSchema = new Schema({
 /**
  * Create a meetup and add it to the meetups array in the given group.
  */
-GroupSchema.statics.addMeetup = async function (id, args) {
+GroupSchema.statics.addMeetup = async (id, args) => {
   const Meetup = mongoose.model('Meetup');
   // We add the group id to the meetup group element
   // Finally this is the author of the meetup
