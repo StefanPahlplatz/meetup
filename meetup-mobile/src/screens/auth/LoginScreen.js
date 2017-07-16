@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Facebook, Google } from 'expo';
-import { Text, Alert } from 'react-native';
+import { Text } from 'react-native';
+import { connect } from 'react-redux';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LoadingScreen } from '../../commons';
+
+import { login } from './actions';
 
 import Fonts from '../../../constants/Fonts';
 import Colors from '../../../constants/Colors';
@@ -35,6 +39,9 @@ const Button = styled.TouchableOpacity`
   paddingHorizontal: 10;
 `;
 
+@connect(state => ({
+  isLoading: state.user.isLoading,
+}), { login })
 class LoginScreen extends Component {
   onLoginPress = (name) => {
     name === 'facebook' ? this.loginWithFacebook() : this.loginWithGoogle();
@@ -46,30 +53,34 @@ class LoginScreen extends Component {
     });
 
     if (type === 'success') {
-      const res = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-      const name = (await res.json()).name;
-      Alert.alert('Logged In!', `Hi ${name}`);
-      console.log(res);
+      this.props.login(token, 'facebook');
+    } else {
+      throw new Error('Something wrong with facebook auth!');
     }
   }
 
   async loginWithGoogle() {
     try {
-      const result = await Expo.Google.logInAsync({
+      const result = await Google.logInAsync({
         androidClientId: googleConfig.CLIENT_ID_ANDROID,
         scopes: ['profile', 'email'],
       });
 
       if (result.type === 'success') {
-        return result.accessToken;
+        this.props.login(result.accessToken, 'google');
+      } else {
+        return { cancelled: true };
       }
-      return { cancelled: true };
     } catch (e) {
       return { error: true };
     }
   }
 
   render() {
+    if (this.props.isLoading) {
+      return <LoadingScreen color={Colors.redColor} />;
+    }
+
     return (
       <FlexContainer>
 

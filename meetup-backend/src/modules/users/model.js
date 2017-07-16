@@ -13,7 +13,7 @@ const UserSchema = new Schema({
   },
 }, { timestamps: true });
 
-UserSchema.statics.findOrCreate = async (args) => {
+UserSchema.statics.findOrCreate = async function (args) {
   try {
     // Try to find a user.
     const user = await this.findOne({

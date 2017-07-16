@@ -16,8 +16,7 @@ class MeetupApi {
       const { data } = await axios.get(this.path);
       return data.meetups;
     } catch (e) {
-      console.error(e);
-      return null;
+      throw e;
     }
   }
 
@@ -27,8 +26,7 @@ class MeetupApi {
       const res = await axios.post(`${this.path}/new`, { ...args });
       return res;
     } catch (e) {
-      console.log(e);
-      return null;
+      throw e;
     }
   }
 }
@@ -36,3 +34,20 @@ class MeetupApi {
 export {
   MeetupApi,
 };
+
+class UserApi {
+  constructor() {
+    this.path = '/users';
+  }
+
+  async login(args) {
+    try {
+      const { data } = await axios.post(`${this.path}/auth0`, args);
+      return data;
+    } catch (e) {
+      throw e;
+    }
+  }
+}
+
+export const User = new UserApi();
