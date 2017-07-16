@@ -5,7 +5,6 @@ import Colors from '../../../constants/Colors';
 import Metrics from '../../../constants/Metrics';
 
 class NotificationsScreen extends Component {
-
   static navigationOptions = {
     headerStyle: {
       backgroundColor: Colors.redColor,
@@ -14,11 +13,11 @@ class NotificationsScreen extends Component {
     },
     tabBarIcon: ({ tintColor }) => (
       <MaterialIcons
-        name='notifications'
+        name="notifications"
         size={25}
         color={tintColor}
       />
-    )
+    ),
   }
 
   render() {

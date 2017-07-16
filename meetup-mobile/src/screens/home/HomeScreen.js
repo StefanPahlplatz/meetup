@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { Button, Icon } from 'native-base';
+import PropTypes from 'prop-types';
 
 import { LoadingScreen } from '../../commons';
 import { MyMeetupList } from './components';
@@ -14,7 +14,6 @@ import styles from './styles/HomeScreen';
 
 @connect(state => ({ myMeetups: state.home.myMeetups }), { fetchMyMeetups })
 class HomeScreen extends Component {
-
   static navigationOptions = ({ navigation }) => ({
     headerStyle: {
       backgroundColor: Colors.redColor,
@@ -50,8 +49,8 @@ class HomeScreen extends Component {
     const {
       myMeetups: {
         isFetched,
-      data,
-      error,
+        data,
+        error,
       },
     } = this.props;
 

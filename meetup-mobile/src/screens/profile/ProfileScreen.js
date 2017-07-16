@@ -5,7 +5,6 @@ import Colors from '../../../constants/Colors';
 import Metrics from '../../../constants/Metrics';
 
 class ProfileScreen extends Component {
-
   static navigationOptions = {
     headerStyle: {
       backgroundColor: Colors.redColor,
@@ -14,11 +13,11 @@ class ProfileScreen extends Component {
     },
     tabBarIcon: ({ tintColor }) => (
       <MaterialIcons
-        name='account-circle'
+        name="account-circle"
         size={25}
         color={tintColor}
       />
-    )
+    ),
   }
 
   render() {

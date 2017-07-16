@@ -25,7 +25,7 @@ const MyMeetupsList = ({ meetups }) => (
               </Text>
               <Text style={styles.meetupCardMetaDate}>
                 Mar 2m 6:00 pm
-            </Text>
+              </Text>
             </View>
           </View>
         ))}

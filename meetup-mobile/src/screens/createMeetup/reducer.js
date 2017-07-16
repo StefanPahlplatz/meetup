@@ -21,7 +21,6 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case CREATE_MEETUP_SUCCESS:
-      console.log('===================== S E T    L O A D I N G =====================');
       return {
         ...INITIAL_STATE,
         isLoading: false,
