@@ -1,5 +1,5 @@
 # Meetup
-##### Tutorial from EQuimper.
+##### Tutorial from [EQuimper](https://www.youtube.com/watch?v=qmNPpoVkY2Y&list=PLzQWIQOqeUSNX_ZDqt9L3TMSwFa9GbIwp).
 
 ## Setup
 
@@ -18,6 +18,3 @@
 - Start a [MongoDB](https://docs.mongodb.com/manual/installation/) server.
 - Start the backend with ```npm run dev```.
 - Start the front-end with ```npm run android``` or ```npm run ios```.
-
-## Tools
-- [React Native Debugger](https://github.com/jhen0409/react-native-debugger)
