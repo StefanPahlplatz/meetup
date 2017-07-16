@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Facebook } from 'expo';
+import { Facebook, Google } from 'expo';
 import { Text, Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Fonts from '../../../constants/Fonts';
 import Colors from '../../../constants/Colors';
 import fbConfig from '../../../constants/fbConfig';
+import googleConfig from '../../../constants/googleConfig';
 
 const FlexContainer = styled.View`
   flex: 1;
@@ -53,7 +54,19 @@ class LoginScreen extends Component {
   }
 
   async loginWithGoogle() {
+    try {
+      const result = await Expo.Google.logInAsync({
+        androidClientId: googleConfig.CLIENT_ID_ANDROID,
+        scopes: ['profile', 'email'],
+      });
 
+      if (result.type === 'success') {
+        return result.accessToken;
+      }
+      return { cancelled: true };
+    } catch (e) {
+      return { error: true };
+    }
   }
 
   render() {
