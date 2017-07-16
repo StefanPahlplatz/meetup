@@ -16,9 +16,9 @@ function cacheFonts(fonts) {
 
 export const fontAssets = {
   fonts: [
-    { 'monserrat-bold': require('../assets/fonts/Montserrat-Bold.ttf') },
-    { 'monserrat-regular': require('../assets/fonts/Montserrat-Regular.ttf') },
-    { 'monserrat-light': require('../assets/fonts/Montserrat-Light.ttf') },
+    { 'montserrat-bold': require('../assets/fonts/Montserrat-Bold.ttf') },
+    { montserrat: require('../assets/fonts/Montserrat-Regular.ttf') },
+    { 'montserrat-light': require('../assets/fonts/Montserrat-Light.ttf') },
   ],
 };
 

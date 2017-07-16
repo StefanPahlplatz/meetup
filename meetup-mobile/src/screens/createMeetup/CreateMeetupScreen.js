@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
-import { Platform, View, TouchableOpacity } from 'react-native';
+import { Platform, View, TouchableOpacity, Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { FormLabel, FormInput, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 
 import { MeetupApi } from '../../../constants/api';
+import { CreateMeetupForm } from './components';
+import { createMeetup } from './actions';
+import { LoadingScreen } from '../../commons';
 import Metrics from '../../../constants/Metrics';
 import Colors from '../../../constants/Colors';
 import styles from './styles/CreateMeetupScreen';
 
 const meetupApi = new MeetupApi();
 
+@connect(
+  state => ({
+    meetup: state.createMeetup,
+  }),
+  { createMeetup },
+)
 class CreateMeetupScreen extends Component {
   static navigationOptions = ({ navigation }) => ({ //eslint-disable-line
     title: 'Create a new Meetup',
@@ -46,8 +55,6 @@ class CreateMeetupScreen extends Component {
     this.state = {
       isDateTimePickerVisible: false,
       date: moment(),
-      title: '',
-      description: '',
     };
   }
 
@@ -72,72 +79,43 @@ class CreateMeetupScreen extends Component {
 
   // Checks if the submit button should be disabled based on some conditions.
   checkIfButtonSubmitDisabled() {
-    const { title, description, date } = this.state;
+    const { date } = this.state;
 
-    if (title.length > 5 && description.length > 5 && date > moment()) {
+    if (date > moment()) {
       return false;
     }
     return true;
   }
 
-  // Updates the title state when the text input changes.
-  changeTitle = title => this.setState({ title });
-
-  // Updates the description state when the text input changes.
-  changeDescription = description => this.setState({ description });
-
-  createMeetup = async () => {
-    const { title, description, date } = this.state;
-
-    const res = await meetupApi.createGroupMeetups({
-      title,
-      description,
-      date,
-    });
+  createMeetup = async (values) => {
+    await this.props.createMeetup(values);
+    this.props.navigation.goBack();
   }
 
   render() {
+    const {
+      meetup,
+    } = this.props;
+    if (meetup.isLoading) {
+      return (
+        <View style={styles.root}>
+          <LoadingScreen />
+        </View>
+      );
+    } else if (meetup.error.on) {
+      return (
+        <View style={styles.root}>
+          <Text>{meetup.error.message}</Text>
+        </View>
+      );
+    }
     return (
       <View style={styles.root}>
-        <View style={styles.container}>
-          <View style={styles.item}>
-            <FormLabel>Title</FormLabel>
-            <FormInput
-              style={{ marginRight: 0, height: 52 }}
-              selectionColor={Colors.redColor}
-              onChangeText={this.changeTitle}
-              value={this.state.title}
-            />
-          </View>
-          <View style={styles.item}>
-            <FormLabel>Description</FormLabel>
-            <FormInput
-              style={{ marginRight: 0, height: 52 }}
-              selectionColor={Colors.redColor}
-              onChangeText={this.changeDescription}
-              value={this.state.description}
-              multiline
-            />
-          </View>
-          <View style={styles.item}>
-            <Button
-              onPress={this.showDateTimePicker}
-              title={this.checkTitle()}
-              fontFamily="monserrat-regular"
-              raised
-            />
-          </View>
-          <View style={styles.buttonCreate}>
-            <Button
-              backgroundColor={Colors.blackBlueColor}
-              title="Create Meetup"
-              fontFamily="monserrat-regular"
-              raised
-              onPress={this.createMeetup}
-              disabled={this.checkIfButtonSubmitDisabled()}
-            />
-          </View>
-        </View>
+        <CreateMeetupForm
+          createMeetup={this.createMeetup}
+          showDateTimePicker={this.showDateTimePicker}
+          checkTitle={this.checkTitle()}
+        />
         <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this.handleDatePicked}
