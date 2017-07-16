@@ -1,4 +1,10 @@
 {
   "extends": "airbnb",
-  "globals": { "fetch": false }
+  "globals": {
+    "fetch": false
+  },
+  "rules": {
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off"
+  }
 }

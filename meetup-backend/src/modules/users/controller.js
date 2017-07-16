@@ -1,18 +1,31 @@
 import User from './model';
 import { createToken } from './utils/createToken';
+import { facebookAuth } from './utils/facebookAuth';
 
 const loginWithAuth0 = async (req, res) => {
-  const { ...args } = req.body;
+  const { provider, token } = req.body;
+  let userInfo;
 
   try {
-    const user = await User.create(args);
-    return res.status(201).json({
+    if (provider === 'google') {
+      // todo
+    } else if (provider === 'facebook') {
+      userInfo = await facebookAuth(token);
+    } else {
+      console.error(`Unknown provider ${provider}`);
+    }
+
+    const user = await User.findOrCreate(userInfo);
+
+    return res.status(200).json({
       success: true,
-      user,
+      user: {
+        id: user._id,
+      },
       token: `JWT ${createToken(user)}`,
     });
   } catch (e) {
-    return res.status(400).json({ error: true, message: 'Error occurred while authenticating!' });
+    return res.status(400).json({ error: true, message: e.message });
   }
 };
 
