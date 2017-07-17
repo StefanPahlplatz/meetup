@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, View, TouchableOpacity, Text } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
@@ -9,8 +8,6 @@ import { MeetupApi } from '../../../constants/api';
 import { CreateMeetupForm } from './components';
 import { createMeetup } from './actions';
 import { LoadingScreen } from '../../commons';
-import Metrics from '../../../constants/Metrics';
-import Colors from '../../../constants/Colors';
 import styles from './styles/CreateMeetupScreen';
 
 const meetupApi = new MeetupApi();
@@ -22,33 +19,6 @@ const meetupApi = new MeetupApi();
   { createMeetup },
 )
 class CreateMeetupScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({ //eslint-disable-line
-    title: 'Create a new Meetup',
-    headerTitleStyle: { color: Colors.whiteColor },
-    headerStyle: {
-      backgroundColor: Colors.redColor,
-      ...Platform.select({
-        android: {
-          backgroundColor: Colors.redColor,
-          paddingTop: Metrics.statusBarHeight,
-          height: Metrics.statusBarHeight + Metrics.toolBarHeight,
-        },
-      }),
-    },
-    headerLeft: (
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.iconClose}
-      >
-        <MaterialIcons
-          name="close"
-          size={30}
-          color="#fff"
-        />
-      </TouchableOpacity>
-    ),
-  });
-
   constructor() {
     super();
 

@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
+import { autoRehydrate } from 'redux-persist';
 
 import reducers from './reducers';
 
@@ -15,10 +16,8 @@ if (process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
 }
 
-const enhancers = window.__REDUX_DEVTOOLS_EXTIONSION_COMPOSE__ || compose; //eslint-disable-line
-
 export default createStore(
   reducers,
   undefined,
-  enhancers(applyMiddleware(...middlewares)),
+  compose(applyMiddleware(...middlewares), autoRehydrate()),
 );

@@ -14,9 +14,6 @@ const styles = EStyleSheet.create({
   bottomContainer: {
     flex: 0.8,
   },
-  iconAdd: {
-    marginRight: 12,
-  },
 });
 
 export default styles;

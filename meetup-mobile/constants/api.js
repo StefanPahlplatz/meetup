@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'http://192.168.2.60:3000/api';
 
-const fakeGroupId = '5963946c5ed49a0c800dd3a4';
+const fakeGroupId = '596cebe3c6fd712d78407a99';
 
 class MeetupApi {
   constructor() {

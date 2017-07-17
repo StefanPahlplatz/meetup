@@ -5,9 +5,6 @@ const styles = EStyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  iconClose: {
-    marginLeft: 12,
-  },
 });
 
 export default styles;
